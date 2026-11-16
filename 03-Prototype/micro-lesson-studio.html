@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Micro-lesson studio</title>
+<style>
+:root{
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  --ink:#17211c; --muted:#4d5c54; --paper:#ffffff; --canvas:#f2f5f3; --line:#c9d3cd;
+  --accent:#1f7a3e; --on-accent:#ffffff; --accent-soft:#e1f0e6;
+  --bad:#a8231b; --bad-soft:#fbe5e2; --warn-soft:#fff1d4; --warn-ink:#5e3f00;
+  --mark:#ffe58a; --focus:#0b57d0; --code-bg:#f6f8f7;
+  --sans:"Segoe UI","Helvetica Neue",Arial,sans-serif; --mono:ui-monospace,"Cascadia Mono",Consolas,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ink:#e6eee9; --muted:#a6b5ac; --paper:#1a221f; --canvas:#121816; --line:#34413b;
+    --accent:#5cc77d; --on-accent:#0a1a10; --accent-soft:#1d3326;
+    --bad:#ff8f86; --bad-soft:#3a1d1a; --warn-soft:#3a2f12; --warn-ink:#ffd98a;
+    --mark:#6d5c14; --focus:#8ab4ff; --code-bg:#151c19;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ink:#e6eee9; --muted:#a6b5ac; --paper:#1a221f; --canvas:#121816; --line:#34413b;
+  --accent:#5cc77d; --on-accent:#0a1a10; --accent-soft:#1d3326;
+  --bad:#ff8f86; --bad-soft:#3a1d1a; --warn-soft:#3a2f12; --warn-ink:#ffd98a;
+  --mark:#6d5c14; --focus:#8ab4ff; --code-bg:#151c19;
+}
+html{height:100%}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;background:var(--canvas);color:var(--ink);font:15px/1.5 var(--sans)}
+h1{font-size:24px;line-height:1.2;margin:0 0 4px;font-weight:650}
+h2{font-size:17px;margin:24px 0 8px;font-weight:650}
+h3{font-size:15px;margin:0 0 6px;font-weight:650}
+p{margin:0 0 12px}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-60px;background:var(--paper);padding:8px 12px;border:2px solid var(--focus);border-radius:6px;z-index:10}
+.skip:focus{top:8px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 24px;background:var(--paper);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:baseline;gap:12px}
+.brand strong{font-size:18px}
+.brand span{color:var(--muted);font-size:13px}
+.ghost{background:transparent;border:1px solid var(--line);border-radius:6px;padding:6px 12px;cursor:pointer}
+.ghost:hover{background:var(--accent-soft)}
+.steps{background:var(--paper);border-bottom:1px solid var(--line);padding:0 24px}
+.steps ol{list-style:none;display:flex;gap:4px;margin:0 auto;padding:0;max-width:1120px;overflow-x:auto}
+.steps button{display:flex;align-items:center;gap:8px;background:none;border:0;border-bottom:3px solid transparent;padding:12px 14px;cursor:pointer;color:var(--muted);white-space:nowrap}
+.steps button .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1.5px solid currentColor;font-size:12px;font-weight:650}
+.steps button[aria-current="step"]{color:var(--ink);border-bottom-color:var(--accent);font-weight:650}
+.steps button[aria-current="step"] .n{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.steps button:disabled{opacity:.5;cursor:not-allowed}
+main{max-width:1120px;margin:0 auto;padding:24px 24px 56px}
+main:focus{outline:none}
+.lead{color:var(--muted);max-width:68ch}
+.lead .pill{margin-right:8px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px}
+.notice{background:var(--warn-soft);color:var(--warn-ink);border-radius:8px;padding:10px 14px;margin:0 0 16px}
+label{display:block;font-weight:600;margin:0 0 4px}
+textarea,input[type=text],select{width:100%;border:1px solid var(--line);border-radius:6px;padding:8px 10px;background:var(--paper)}
+textarea{resize:vertical;min-height:96px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0 16px;flex-wrap:wrap}
+.count{color:var(--muted);font-size:13px}
+fieldset{border:1px solid var(--line);border-radius:8px;padding:12px 16px 4px;margin:0 0 16px}
+legend{font-weight:650;padding:0 6px}
+.chk{display:flex;gap:8px;align-items:flex-start;font-weight:600}
+.chk input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent)}
+.hint{color:var(--muted);font-size:13px;margin:2px 0 12px 26px}
+.field{margin:0 0 14px}
+.field select{max-width:140px}
+.actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.primary{background:var(--accent);color:var(--on-accent);border:0;border-radius:6px;padding:9px 18px;font-weight:650;cursor:pointer}
+.primary:hover:not(:disabled){filter:brightness(1.08)}
+.primary:disabled,.secondary:disabled{opacity:.45;cursor:not-allowed}
+.secondary{background:var(--paper);border:1.5px solid var(--accent);color:var(--ink);border-radius:6px;padding:8px 16px;font-weight:600;cursor:pointer}
+.danger{background:var(--paper);border:1.5px solid var(--bad);color:var(--bad);border-radius:6px;padding:8px 16px;font-weight:600;cursor:pointer}
+.msg{font-size:14px}
+.msg.bad{color:var(--bad)}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:650}
+.pill.ok{background:var(--accent-soft);color:var(--ink);border:1px solid var(--accent)}
+.pill.bad{background:var(--bad-soft);color:var(--bad);border:1px solid var(--bad)}
+.pill.wait{background:var(--warn-soft);color:var(--warn-ink)}
+.lanes{display:grid;grid-template-columns:1fr 40px 1fr;gap:12px 8px;align-items:stretch;margin:12px 0}
+.lanehead{font-weight:650;color:var(--muted);font-size:14px}
+.agent{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--paper)}
+.agent.drafter{border-left:6px solid var(--accent)}
+.agent.reviewer.revise{border-left:6px solid var(--bad)}
+.agent.reviewer.approve{border-left:6px solid var(--accent)}
+.agent.reviewer.pending{border-left:6px solid var(--line)}
+.agent dl{margin:0;display:grid;grid-template-columns:76px 1fr;gap:4px 10px;font-size:14px}
+.agent dt{color:var(--muted)}
+.agent dd{margin:0;overflow-wrap:anywhere}
+.arrow{display:grid;place-items:center;color:var(--muted);font-size:20px}
+.issues{margin:8px 0 0;padding-left:20px;font-size:14px}
+.working{color:var(--muted);font-style:italic}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--accent);margin-right:6px;animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+@media (prefers-reduced-motion: reduce){.dot{animation:none}}
+.trace{list-style:none;margin:0;padding:0;font:13px/1.6 var(--mono);background:var(--code-bg);border:1px solid var(--line);border-radius:8px}
+.trace li{display:grid;grid-template-columns:56px 100px 1fr;gap:8px;padding:4px 12px;border-bottom:1px solid var(--line)}
+.trace li:last-child{border-bottom:0}
+.trace .t{color:var(--muted)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.srcbox{white-space:pre-wrap;line-height:1.7;max-height:420px;overflow:auto}
+mark{background:var(--mark);color:var(--ink);padding:1px 2px;border-radius:3px}
+.checks{list-style:none;margin:0 0 12px;padding:0}
+.checks li{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:14px}
+.checks li:last-child{border-bottom:0}
+.tick{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700}
+.tick.ok{background:var(--accent);color:var(--on-accent)}
+.tick.bad{background:var(--bad);color:#fff}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{border:1px solid var(--line);border-radius:10px;padding:16px;background:var(--paper)}
+.card pre{margin:8px 0;padding:10px;background:var(--code-bg);border:1px solid var(--line);border-radius:6px;font:12.5px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
+.empty{border:1px dashed var(--line);border-radius:10px;padding:28px;text-align:center;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:8px;max-width:90vw;z-index:20}
+.toast[hidden]{display:none}
+@media (max-width:820px){.split{grid-template-columns:1fr}.lanes{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}.trace li{grid-template-columns:48px 1fr}.trace li .a{display:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="bar">
+  <div class="brand"><strong>Micro-lesson studio</strong><span>Warm-up build</span></div>
+  <button class="ghost" id="reset" type="button" title="Clears everything and starts again">Reset demo</button>
+</header>
+<nav class="steps" aria-label="Steps">
+  <ol id="steps"></ol>
+</nav>
+<main id="main" tabindex="-1"></main>
+<div class="sr" role="status" aria-live="polite" id="live"></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function () {
+  'use strict';
+  var KEY = 'micro-lesson-studio-v1';
+  var STEP = /[?&]fast/.test(location.search) ? 0 : (/[?&]step=(\d+)/.exec(location.search) ? +/[?&]step=(\d+)/.exec(location.search)[1] : 340);
+  var SAMPLE = 'A good team stand-up is short and predictable. Hold it at the same time every day, and keep it to 15 minutes. Each person answers three questions: what they did yesterday, what they will do today, and what is blocking them. Detailed discussions are parked and taken offline with the people involved. Every blocker is written down with an owner.';
+  var MIN = 50, MAX = 3000;
+  var STOP = 'the a an and or of to in on for with it is are be as at by that this they them their what will each every does did was were from about also into than then there when where which who whom whose your you our out off over any all not but can has have had its per one'.split(' ');
+
+  var S = load() || fresh();
+  function fresh() { return { view: 'source', source: SAMPLE, flaw: true, retries: 1, run: null, lesson: null, lib: [], rejected: [], reject: false }; }
+  function load() { try { var v = localStorage.getItem(KEY); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* storage may be unavailable */ } }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function norm(t) { return String(t || '').replace(/\s+/g, ' ').trim().toLowerCase(); }
+  function words(t) { return (String(t || '').toLowerCase().match(/[a-z0-9]+(?:[-'][a-z0-9]+)*/g) || []); }
+  function say(msg) { document.getElementById('live').textContent = ''; setTimeout(function () { document.getElementById('live').textContent = msg; }, 30); }
+  var toastTimer;
+  function toast(msg) { var t = document.getElementById('toast'); t.textContent = msg; t.hidden = false; say(msg); clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.hidden = true; }, 3800); }
+
+  /* ------------------------------------------------------------ agents (simulated, rule based) */
+  function sentences(src) { return src.trim().split(/(?<=[.!?])\s+/).filter(Boolean); }
+  function pickFact(src) {
+    var ss = sentences(src), i, m;
+    for (i = 0; i < ss.length; i++) { m = ss[i].match(/\d+(?:[.,]\d+)?/); if (m) return { sentence: ss[i], answer: m[0] }; }
+    for (i = 0; i < ss.length; i++) { m = ss[i].match(/\b(one|two|three|four|five|six|seven|eight|nine|ten)\b/i); if (m) return { sentence: ss[i], answer: m[0] }; }
+    var longest = ss.slice().sort(function (a, b) { return b.length - a.length; })[0] || src;
+    var w = longest.split(/\s+/).map(function (x) { return x.replace(/[^\w-]/g, ''); }).sort(function (a, b) { return b.length - a.length; })[0] || longest;
+    return { sentence: longest, answer: w };
+  }
+  function drafter(src, feedback, attempt, flaw) {
+    var ss = sentences(src), first = ss[0] || src, fact = pickFact(src);
+    var title = first.split(/\s+(?:is|are)\s+/i)[0].replace(/[.:;,!?]+$/, '').split(/\s+/).slice(0, 8).join(' ');
+    var quote = fact.sentence, summary = first;
+    if (flaw && attempt === 1) { quote = quote.replace(/[.!?]+$/, '') + ' or so.'; summary = first + ' Most teams do it in the morning.'; }
+    return { title: title, summary: summary, quiz: { question: 'Complete the statement: ' + fact.sentence.replace(fact.answer, '____'), answer: fact.answer }, source_quote: quote };
+  }
+  function reviewer(src, lesson) {
+    var checks = [], l = lesson || {}, q = l.quiz || {};
+    var okContract = ['title', 'summary', 'source_quote'].every(function (k) { return typeof l[k] === 'string' && l[k].trim(); }) && typeof q.question === 'string' && q.question.indexOf('____') > -1 && typeof q.answer === 'string' && q.answer.trim() !== '';
+    checks.push({ id: 'contract', label: 'Lesson has every field and the question has a blank', pass: okContract, issue: 'The lesson is missing a field, or the question has no blank (____).' });
+    var okQuote = !!l.source_quote && norm(src).indexOf(norm(l.source_quote)) > -1;
+    checks.push({ id: 'quote', label: 'Source quote is an exact piece of the source', pass: okQuote, issue: 'The source quote is not an exact piece of the source text.' });
+    var okAnswer = !!q.answer && !!l.source_quote && norm(l.source_quote).indexOf(norm(q.answer)) > -1;
+    checks.push({ id: 'answer', label: 'Quiz answer appears in the source quote', pass: okAnswer, issue: 'The quiz answer does not appear in the source quote.' });
+    var srcWords = {}; words(src).forEach(function (w) { srcWords[w] = 1; });
+    var content = words(l.summary).filter(function (w) { return w.length > 3 && STOP.indexOf(w) < 0; });
+    var unsupported = content.filter(function (w) { return !srcWords[w]; });
+    var okSummary = content.length === 0 || unsupported.length / content.length <= 0.2;
+    checks.push({ id: 'summary', label: 'Summary uses only words from the source', pass: okSummary, issue: 'The summary uses words that are not in the source: ' + unsupported.slice(0, 4).join(', ') + '.' });
+    var qBody = norm(String(q.question || '').replace(/^complete the statement:\s*/i, '').replace('____', ''));
+    var qWords = words(qBody), quoteWords = {}; words(l.source_quote).forEach(function (w) { quoteWords[w] = 1; });
+    var hit = qWords.filter(function (w) { return quoteWords[w]; }).length;
+    var okQuestion = qWords.length > 0 && hit / qWords.length >= 0.8;
+    checks.push({ id: 'question', label: 'Quiz question matches the source quote', pass: okQuestion, issue: 'The quiz question does not match the source quote.' });
+    var issues = checks.filter(function (c) { return !c.pass; }).map(function (c) { return c.issue; });
+    return { verdict: issues.length ? 'revise' : 'approve', issues: issues, checks: checks };
+  }
+
+  /* ------------------------------------------------------------ orchestrator */
+  var t0 = 0;
+  function log(agent, text) { S.run.trace.push({ t: ((Date.now() - t0) / 1000).toFixed(1) + 's', agent: agent, text: text }); }
+  async function run() {
+    S.run = { status: 'running', attempts: [], trace: [], active: null }; S.lesson = null; S.reject = false; S.view = 'agents'; t0 = Date.now(); render();
+    log('Orchestrator', 'Started. Flawed first draft ' + (S.flaw ? 'on' : 'off') + ', maximum retries ' + S.retries + '.');
+    var feedback = null, n, draft, review;
+    for (n = 1; n <= S.retries + 1; n++) {
+      S.run.active = { agent: 'Drafter', n: n }; render(); await sleep(STEP);
+      draft = drafter(S.source, feedback, n, S.flaw); S.run.attempts.push({ n: n, draft: draft, review: null }); log('Drafter', 'Attempt ' + n + ': wrote a lesson.'); S.run.active = { agent: 'Reviewer', n: n }; render(); await sleep(STEP);
+      review = reviewer(S.source, draft); S.run.attempts[n - 1].review = review;
+      log('Reviewer', 'Attempt ' + n + ': ' + review.verdict + ' (' + review.issues.length + ' issue' + (review.issues.length === 1 ? '' : 's') + ').'); render(); await sleep(STEP);
+      if (review.verdict === 'approve') { S.run.status = 'approved'; log('Orchestrator', 'Approved by the Reviewer. Stopping.'); break; }
+      if (n <= S.retries) { log('Orchestrator', 'Sent ' + review.issues.length + ' issue' + (review.issues.length === 1 ? '' : 's') + ' back to the Drafter.'); feedback = review.issues; }
+      else { S.run.status = 'needs-person'; log('Orchestrator', 'Retry limit reached. A person needs to decide.'); }
+    }
+    S.run.active = null; S.lesson = clone(draft); save(); render();
+    say(S.run.status === 'approved' ? 'Agents finished. The Reviewer approved the lesson.' : 'Agents finished. The lesson needs a person to decide.');
+    var h = document.getElementById('h-agents'); if (h) h.focus();
+  }
+
+  /* ------------------------------------------------------------ views */
+  var VIEWS = [['source', 'Source'], ['agents', 'Agents'], ['review', 'Review'], ['library', 'Library']];
+  function enabled(v) { return v === 'source' || v === 'library' || (v === 'agents' && !!S.run) || (v === 'review' && !!S.lesson); }
+  function renderSteps() {
+    document.getElementById('steps').innerHTML = VIEWS.map(function (v, i) {
+      return '<li><button type="button" data-go="' + v[0] + '"' + (S.view === v[0] ? ' aria-current="step"' : '') + (enabled(v[0]) ? '' : ' disabled') + '><span class="n" aria-hidden="true">' + (i + 1) + '</span>' + v[1] + (v[0] === 'library' && S.lib.length ? ' (' + S.lib.length + ')' : '') + '</button></li>';
+    }).join('');
+  }
+  function validity() {
+    var n = S.source.trim().length;
+    if (n < MIN) return { ok: false, msg: 'Add at least ' + MIN + ' characters. You have ' + n + '.' };
+    if (n > MAX) return { ok: false, msg: 'Shorten the text to ' + MAX.toLocaleString('en-US') + ' characters or fewer. You have ' + n.toLocaleString('en-US') + '.' };
+    return { ok: true, msg: '' };
+  }
+  function viewSource() {
+    var v = validity();
+    return '<h1 id="h-source" tabindex="-1">Source text</h1><p class="lead">Paste a short public text. Two agents turn it into one micro-lesson, and then you review it.</p>' +
+      '<div class="panel"><div class="notice" role="note">Use public text only. Nothing you type leaves this page.</div>' +
+      '<label for="src">Source text</label><textarea id="src" rows="9" aria-describedby="count run-msg">' + esc(S.source) + '</textarea>' +
+      '<div class="row"><span class="count" id="count">' + S.source.trim().length.toLocaleString('en-US') + ' of ' + MAX.toLocaleString('en-US') + ' characters</span><button class="ghost" type="button" id="sample">Load sample text</button></div>' +
+      '<fieldset><legend>Agent settings</legend><label class="chk"><input type="checkbox" id="flaw"' + (S.flaw ? ' checked' : '') + '> Make the first draft flawed on purpose</label>' +
+      '<p class="hint">Lets you watch the Reviewer catch mistakes. Turn it off to see a clean run.</p>' +
+      '<div class="field"><label for="retries">Maximum retries</label><select id="retries">' + [0, 1, 2].map(function (n) { return '<option value="' + n + '"' + (S.retries === n ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select></div></fieldset>' +
+      '<div class="actions"><button class="primary" type="button" id="run"' + (v.ok ? '' : ' disabled aria-disabled="true"') + '>Run the agents</button><span class="msg ' + (v.ok ? '' : 'bad') + '" id="run-msg">' + esc(v.msg) + '</span></div></div>';
+  }
+  function draftCard(a) {
+    var d = a.draft;
+    return '<div class="agent drafter"><h3>Drafter, attempt ' + a.n + '</h3><dl><dt>Title</dt><dd>' + esc(d.title) + '</dd><dt>Summary</dt><dd>' + esc(d.summary) + '</dd><dt>Question</dt><dd>' + esc(d.quiz.question) + '</dd><dt>Answer</dt><dd>' + esc(d.quiz.answer) + '</dd><dt>Quote</dt><dd>“' + esc(d.source_quote) + '”</dd></dl></div>';
+  }
+  function reviewCard(a, active) {
+    if (!a.review) return '<div class="agent reviewer pending"><h3>Reviewer, attempt ' + a.n + '</h3><p class="working">' + (active && active.agent === 'Reviewer' && active.n === a.n ? '<span class="dot"></span>Checking the draft against the source…' : 'Waiting for the draft.') + '</p></div>';
+    var r = a.review;
+    return '<div class="agent reviewer ' + r.verdict + '"><h3>Reviewer, attempt ' + a.n + ' <span class="pill ' + (r.verdict === 'approve' ? 'ok' : 'bad') + '">' + (r.verdict === 'approve' ? 'Approve' : 'Revise') + '</span></h3>' +
+      (r.issues.length ? '<ul class="issues">' + r.issues.map(function (i) { return '<li>' + esc(i) + '</li>'; }).join('') + '</ul>' : '<p>No issues found. All five checks passed.</p>') + '</div>';
+  }
+  function viewAgents() {
+    var r = S.run; if (!r) return '<h1 id="h-agents" tabindex="-1">Agent run</h1><div class="empty">Run the agents from the Source step first.</div>';
+    var status = r.status === 'running' ? '<span class="pill wait">Running</span>' : r.status === 'approved' ? '<span class="pill ok">Approved by the Reviewer</span>' : '<span class="pill bad">Needs a person</span>';
+    var rows = r.attempts.map(function (a) { return draftCard(a) + '<div class="arrow" aria-hidden="true">→</div>' + reviewCard(a, r.active); }).join('');
+    if (r.active && r.active.agent === 'Drafter') rows += '<div class="agent drafter"><h3>Drafter, attempt ' + r.active.n + '</h3><p class="working"><span class="dot"></span>Writing the lesson…</p></div><div class="arrow" aria-hidden="true">→</div><div></div>';
+    return '<h1 id="h-agents" tabindex="-1">Agent run</h1><p class="lead">' + status + ' The Drafter writes, the Reviewer checks, and the Orchestrator sends issues back until the lesson is approved or the retry limit is reached.</p>' +
+      '<div class="lanes"><div class="lanehead">Drafter agent</div><div></div><div class="lanehead">Reviewer agent</div>' + rows + '</div>' +
+      '<h2>Trace</h2><ol class="trace" aria-label="Trace of agent steps">' + r.trace.map(function (t) { return '<li><span class="t">' + t.t + '</span><span class="a">' + esc(t.agent) + '</span><span>' + esc(t.text) + '</span></li>'; }).join('') + '</ol>' +
+      '<div class="actions" style="margin-top:16px"><button class="primary" type="button" id="to-review"' + (r.status === 'running' ? ' disabled aria-disabled="true"' : '') + '>Open human review</button><button class="ghost" type="button" id="copy-trace">Copy trace</button></div>';
+  }
+  function highlighted(src, quote) {
+    if (!quote) return { html: esc(src), found: false };
+    var pat = quote.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+'), m;
+    try { m = new RegExp(pat, 'i').exec(src); } catch (e) { m = null; }
+    if (!m) return { html: esc(src), found: false };
+    return { html: esc(src.slice(0, m.index)) + '<mark>' + esc(m[0]) + '</mark>' + esc(src.slice(m.index + m[0].length)), found: true };
+  }
+  function viewReview() {
+    var L = S.lesson; if (!L) return '<h1 id="h-review" tabindex="-1">Human review</h1><div class="empty">There is no lesson to review yet. Run the agents first.</div>';
+    var rv = reviewer(S.source, L), h = highlighted(S.source, L.source_quote), open = rv.issues.length;
+    var banner = S.run && S.run.status === 'needs-person' ? '<div class="notice" role="note">The agents could not agree within the retry limit. A person needs to decide.</div>' : '';
+    return '<h1 id="h-review" tabindex="-1">Human review</h1><p class="lead">Compare the lesson with its source. Edit anything that is wrong, check again, then approve or reject.</p>' + banner +
+      '<div class="split"><section class="panel" aria-labelledby="src-h"><h2 id="src-h" style="margin-top:0">Source</h2><div class="srcbox">' + h.html + '</div>' + (h.found ? '' : '<p class="msg bad" style="margin-top:8px">The source quote was not found in the source text, so nothing is highlighted.</p>') + '</section>' +
+      '<section class="panel" aria-labelledby="les-h"><h2 id="les-h" style="margin-top:0">Lesson</h2>' +
+      '<div class="field"><label for="f-title">Title</label><input type="text" id="f-title" value="' + esc(L.title) + '"></div>' +
+      '<div class="field"><label for="f-summary">Summary</label><textarea id="f-summary" rows="2">' + esc(L.summary) + '</textarea></div>' +
+      '<div class="field"><label for="f-question">Quiz question</label><textarea id="f-question" rows="2">' + esc(L.quiz.question) + '</textarea></div>' +
+      '<div class="field"><label for="f-answer">Quiz answer</label><input type="text" id="f-answer" value="' + esc(L.quiz.answer) + '"></div>' +
+      '<div class="field"><label for="f-quote">Source quote</label><textarea id="f-quote" rows="2">' + esc(L.source_quote) + '</textarea></div>' +
+      '<h3>Checks <span class="pill ' + (open ? 'bad' : 'ok') + '">' + (open ? open + ' open' : 'All passed') + '</span></h3>' +
+      '<ul class="checks" aria-label="Review checks">' + rv.checks.map(function (c) { return '<li><span class="tick ' + (c.pass ? 'ok' : 'bad') + '" aria-hidden="true">' + (c.pass ? '✓' : '✕') + '</span><span><span class="sr">' + (c.pass ? 'Passed: ' : 'Failed: ') + '</span>' + esc(c.label) + (c.pass ? '' : '<br><span class="msg bad">' + esc(c.issue) + '</span>') + '</span></li>'; }).join('') + '</ul>' +
+      (open ? '<label class="chk" style="margin-bottom:12px"><input type="checkbox" id="ack"> I have read the open issues and want to approve anyway</label>' : '') +
+      '<div class="actions"><button class="primary" type="button" id="approve">Approve lesson</button><button class="secondary" type="button" id="recheck">Check again</button><button class="danger" type="button" id="reject-open">Reject</button><span class="msg bad" id="rv-msg" role="alert"></span></div>' +
+      (S.reject ? '<div class="field" style="margin-top:16px"><label for="reason">Reason for rejecting</label><textarea id="reason" rows="2"></textarea><div class="actions" style="margin-top:8px"><button class="danger" type="button" id="reject-go">Confirm reject</button><button class="ghost" type="button" id="reject-cancel">Cancel</button></div></div>' : '') +
+      '</section></div>';
+  }
+  function viewLibrary() {
+    var cards = S.lib.map(function (it, i) {
+      return '<article class="card"><h3>' + esc(it.lesson.title) + '</h3><p class="count">Approved ' + esc(it.at) + '</p><p>' + esc(it.lesson.summary) + '</p><pre>' + esc(JSON.stringify(it.lesson, null, 2)) + '</pre><div class="actions"><button class="secondary" type="button" data-copy="' + i + '">Copy JSON</button><button class="ghost" type="button" data-remove="' + i + '">Remove</button></div></article>';
+    }).join('');
+    var rej = S.rejected.length ? '<h2>Rejected</h2><ul>' + S.rejected.map(function (r) { return '<li><strong>' + esc(r.title) + '</strong> (' + esc(r.at) + '): ' + esc(r.reason) + '</li>'; }).join('') + '</ul>' : '';
+    return '<h1 id="h-library" tabindex="-1">Library</h1><p class="lead">Approved lessons are kept in this browser only.</p>' +
+      (S.lib.length ? '<div class="actions" style="margin-bottom:16px"><button class="secondary" type="button" id="copy-all">Copy all as JSON</button></div><div class="cards">' + cards + '</div>' : '<div class="empty">No approved lessons yet. Run the agents, review the lesson, and approve it to see it here.</div>') + rej;
+  }
+  function render() {
+    renderSteps();
+    var main = document.getElementById('main');
+    main.innerHTML = S.view === 'source' ? viewSource() : S.view === 'agents' ? viewAgents() : S.view === 'review' ? viewReview() : viewLibrary();
+  }
+  function go(v) { if (!enabled(v)) return; S.view = v; save(); render(); var h = document.getElementById('h-' + v); if (h) h.focus(); }
+  function stamp() { var d = new Date(); return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) + ', ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }); }
+  function copy(text, ok) {
+    function fallback() { var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); toast(ok); } catch (e) { toast('Copy is not available here. Select the text and copy it.'); } document.body.removeChild(ta); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { toast(ok); }, fallback); else fallback();
+  }
+  function readLesson() {
+    S.lesson = { title: document.getElementById('f-title').value, summary: document.getElementById('f-summary').value, quiz: { question: document.getElementById('f-question').value, answer: document.getElementById('f-answer').value }, source_quote: document.getElementById('f-quote').value };
+  }
+
+  /* ------------------------------------------------------------ events */
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('button'); if (!t) return;
+    if (t.dataset.go) return go(t.dataset.go);
+    if (t.dataset.copy) return copy(JSON.stringify(S.lib[+t.dataset.copy].lesson, null, 2), 'Lesson copied as JSON.');
+    if (t.dataset.remove) { var gone = S.lib.splice(+t.dataset.remove, 1)[0]; save(); render(); return toast('Removed “' + gone.lesson.title + '”.'); }
+    switch (t.id) {
+      case 'reset': S = fresh(); try { localStorage.removeItem(KEY); } catch (x) { /* ignore */ } render(); return toast('Demo reset.');
+      case 'sample': S.source = SAMPLE; save(); render(); document.getElementById('src').focus(); return say('Sample text loaded.');
+      case 'run': if (validity().ok) run(); return;
+      case 'to-review': return go('review');
+      case 'copy-trace': return copy(S.run.trace.map(function (t2) { return t2.t + '  ' + t2.agent + '  ' + t2.text; }).join('\n'), 'Trace copied.');
+      case 'recheck': readLesson(); save(); render(); return toast('Checks run again.');
+      case 'approve': {
+        readLesson(); var rv = reviewer(S.source, S.lesson);
+        if (rv.issues.length && !(document.getElementById('ack') || {}).checked) { document.getElementById('rv-msg').textContent = 'Tick the box to approve with open issues, or fix them and check again.'; return; }
+        S.lib.unshift({ lesson: clone(S.lesson), at: stamp() }); var title = S.lesson.title; S.lesson = null; S.reject = false; S.view = 'library'; save(); render(); var h = document.getElementById('h-library'); if (h) h.focus(); return toast('Approved “' + title + '”. Added to the library.');
+      }
+      case 'reject-open': readLesson(); S.reject = true; save(); render(); document.getElementById('reason').focus(); return;
+      case 'reject-cancel': S.reject = false; save(); render(); return;
+      case 'reject-go': {
+        var reason = document.getElementById('reason').value.trim();
+        if (!reason) { document.getElementById('rv-msg').textContent = 'Write a reason before you reject.'; return; }
+        S.rejected.unshift({ title: S.lesson.title, reason: reason, at: stamp() }); S.lesson = null; S.reject = false; S.view = 'library'; save(); render(); var h2 = document.getElementById('h-library'); if (h2) h2.focus(); return toast('Rejected. The reason is saved.');
+      }
+      case 'copy-all': return copy(JSON.stringify(S.lib.map(function (i) { return i.lesson; }), null, 2), 'All lessons copied as JSON.');
+    }
+  });
+  document.addEventListener('input', function (e) {
+    if (e.target.id === 'src') {
+      S.source = e.target.value; save(); var v = validity(), b = document.getElementById('run'), m = document.getElementById('run-msg');
+      document.getElementById('count').textContent = S.source.trim().length.toLocaleString('en-US') + ' of ' + MAX.toLocaleString('en-US') + ' characters';
+      b.disabled = !v.ok; b.setAttribute('aria-disabled', String(!v.ok)); m.textContent = v.msg; m.className = 'msg' + (v.ok ? '' : ' bad');
+    }
+  });
+  document.addEventListener('change', function (e) {
+    if (e.target.id === 'flaw') { S.flaw = e.target.checked; save(); }
+    if (e.target.id === 'retries') { S.retries = +e.target.value; save(); }
+  });
+  if (S.run && S.run.status === 'running') { S.run = null; S.view = 'source'; }
+  render();
+})();
+</script>
+</body>
+</html>

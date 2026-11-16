@@ -1,0 +1,1031 @@
+{
+  "name": "Micro-lesson eval set",
+  "version": "1.0",
+  "created": "2026-11-12",
+  "note": "All source texts are original and written for practice. They are not official guidance. Use them only for this warm-up.",
+  "contract": {
+    "lesson": {
+      "title": "string",
+      "summary": "string, one sentence using only words from the source",
+      "quiz": {
+        "question": "string with one blank ____",
+        "answer": "string"
+      },
+      "source_quote": "string, an exact sentence from the source"
+    },
+    "review": {
+      "verdict": "approve or revise",
+      "issues": [
+        "short plain sentences"
+      ]
+    }
+  },
+  "checks": [
+    {
+      "id": "contract",
+      "description": "Every field is present and the question has a blank (____)."
+    },
+    {
+      "id": "quote",
+      "description": "The source quote is an exact piece of the source. Extra spaces and capital letters are ignored."
+    },
+    {
+      "id": "answer",
+      "description": "The quiz answer appears in the source quote."
+    },
+    {
+      "id": "summary",
+      "description": "No more than one in five of the summary's main words (more than 3 letters, not common words) is missing from the source."
+    },
+    {
+      "id": "question",
+      "description": "At least four in five of the question's words (without the blank) appear in the source quote."
+    }
+  ],
+  "sources": [
+    {
+      "id": "src-01",
+      "topic": "Team stand-ups",
+      "text": "A good team stand-up is short and predictable. Hold it at the same time every day, and keep it to 15 minutes. Each person answers three questions: what they did yesterday, what they will do today, and what is blocking them. Detailed discussions are parked and taken offline with the people involved. Every blocker is written down with an owner.",
+      "expected_lesson": {
+        "title": "A good team stand-up",
+        "summary": "A good team stand-up is short and predictable.",
+        "quiz": {
+          "question": "Complete the statement: Hold it at the same time every day, and keep it to ____ minutes.",
+          "answer": "15"
+        },
+        "source_quote": "Hold it at the same time every day, and keep it to 15 minutes."
+      }
+    },
+    {
+      "id": "src-02",
+      "topic": "Password habits",
+      "text": "Good password habits protect every account. Use a different password for every account. Make each password at least 14 characters long. Store passwords in an approved password manager, not in a spreadsheet. Change a password straight away if you think it has been exposed.",
+      "expected_lesson": {
+        "title": "Good password habits",
+        "summary": "Good password habits protect every account.",
+        "quiz": {
+          "question": "Complete the statement: Make each password at least ____ characters long.",
+          "answer": "14"
+        },
+        "source_quote": "Make each password at least 14 characters long."
+      }
+    },
+    {
+      "id": "src-03",
+      "topic": "Meeting agendas",
+      "text": "A clear agenda keeps a meeting focused. Send the agenda at least 24 hours before the meeting. List each topic with the name of the person leading it. Give every topic a time limit. Share the notes with everyone after the meeting.",
+      "expected_lesson": {
+        "title": "A clear meeting agenda",
+        "summary": "A clear agenda keeps a meeting focused.",
+        "quiz": {
+          "question": "Complete the statement: Send the agenda at least ____ hours before the meeting.",
+          "answer": "24"
+        },
+        "source_quote": "Send the agenda at least 24 hours before the meeting."
+      }
+    },
+    {
+      "id": "src-04",
+      "topic": "Writing clear emails",
+      "text": "Clear emails are quick to answer. Write a subject line that says what the email is about. Put the request near the top. Reply to urgent messages within 4 working hours. Check the recipients before you press send.",
+      "expected_lesson": {
+        "title": "Clear emails",
+        "summary": "Clear emails are quick to answer.",
+        "quiz": {
+          "question": "Complete the statement: Reply to urgent messages within ____ working hours.",
+          "answer": "4"
+        },
+        "source_quote": "Reply to urgent messages within 4 working hours."
+      }
+    },
+    {
+      "id": "src-05",
+      "topic": "Pour-over coffee",
+      "text": "Pour-over coffee rewards patience. Use a level scoop of coffee for each cup. Heat the water until it is just below boiling. Wet the grounds first and wait 30 seconds. Pour in slow circles and serve straight away.",
+      "expected_lesson": {
+        "title": "Pour-over coffee",
+        "summary": "Pour-over coffee rewards patience.",
+        "quiz": {
+          "question": "Complete the statement: Wet the grounds first and wait ____ seconds.",
+          "answer": "30"
+        },
+        "source_quote": "Wet the grounds first and wait 30 seconds."
+      }
+    },
+    {
+      "id": "src-06",
+      "topic": "Code reviews",
+      "text": "Good code reviews are quick and kind. Keep each pull request small enough to review in a single sitting. Aim to finish a review within two working days. Comment on the code, not the person. Say why you want a change.",
+      "expected_lesson": {
+        "title": "Good code reviews",
+        "summary": "Good code reviews are quick and kind.",
+        "quiz": {
+          "question": "Complete the statement: Aim to finish a review within ____ working days.",
+          "answer": "two"
+        },
+        "source_quote": "Aim to finish a review within two working days."
+      }
+    },
+    {
+      "id": "src-07",
+      "topic": "Welcoming new starters",
+      "text": "A good welcome helps new starters settle in fast. Send the welcome message before the first day. Book the laptop and access requests at least 5 days ahead. Assign a buddy for the first month. Collect feedback from the new starter.",
+      "expected_lesson": {
+        "title": "Welcoming new starters",
+        "summary": "A good welcome helps new starters settle in fast.",
+        "quiz": {
+          "question": "Complete the statement: Book the laptop and access requests at least ____ days ahead.",
+          "answer": "5"
+        },
+        "source_quote": "Book the laptop and access requests at least 5 days ahead."
+      }
+    },
+    {
+      "id": "src-08",
+      "topic": "Bug reports",
+      "text": "A good bug report saves everyone time. State what you expected and what happened. List the steps to reproduce the problem. Include the version and the browser. Mark the report as urgent only if users are blocked for more than 30 minutes.",
+      "expected_lesson": {
+        "title": "A good bug report",
+        "summary": "A good bug report saves everyone time.",
+        "quiz": {
+          "question": "Complete the statement: Mark the report as urgent only if users are blocked for more than ____ minutes.",
+          "answer": "30"
+        },
+        "source_quote": "Mark the report as urgent only if users are blocked for more than 30 minutes."
+      }
+    }
+  ],
+  "labelled_lessons": [
+    {
+      "id": "L01",
+      "source_id": "src-01",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Correct: the quote is exact, the answer is in the quote, the summary uses only source words, and the question matches the quote.",
+      "lesson": {
+        "title": "A good team stand-up",
+        "summary": "A good team stand-up is short and predictable.",
+        "quiz": {
+          "question": "Complete the statement: Hold it at the same time every day, and keep it to ____ minutes.",
+          "answer": "15"
+        },
+        "source_quote": "Hold it at the same time every day, and keep it to 15 minutes."
+      }
+    },
+    {
+      "id": "L02",
+      "source_id": "src-01",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: extra spaces and lower case in the quote are allowed, because the quote still matches the source.",
+      "lesson": {
+        "title": "A good team stand-up",
+        "summary": "A good team stand-up is short and predictable.",
+        "quiz": {
+          "question": "Complete the statement: Hold it at the same time every day, and keep it to ____ minutes.",
+          "answer": "15"
+        },
+        "source_quote": "  hold  it at the same time every day, and keep it to 15 minutes. "
+      }
+    },
+    {
+      "id": "L03",
+      "source_id": "src-01",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: the summary is worded differently but uses only words from the source.",
+      "lesson": {
+        "title": "A good team stand-up",
+        "summary": "A good team stand-up is short and predictable, with every blocker written down.",
+        "quiz": {
+          "question": "Complete the statement: Hold it at the same time every day, and keep it to ____ minutes.",
+          "answer": "15"
+        },
+        "source_quote": "Hold it at the same time every day, and keep it to 15 minutes."
+      }
+    },
+    {
+      "id": "L04",
+      "source_id": "src-01",
+      "label": "revise",
+      "failure_type": "quote_paraphrased",
+      "expected_failed_checks": [
+        "quote",
+        "question"
+      ],
+      "why": "The source quote is reworded instead of copied from the source.",
+      "lesson": {
+        "title": "A good team stand-up",
+        "summary": "A good team stand-up is short and predictable.",
+        "quiz": {
+          "question": "Complete the statement: Hold it at the same time every day, and keep it to ____ minutes.",
+          "answer": "15"
+        },
+        "source_quote": "Keep a stand-up to about 15 minutes at the same time daily."
+      }
+    },
+    {
+      "id": "L05",
+      "source_id": "src-01",
+      "label": "revise",
+      "failure_type": "invented_summary",
+      "expected_failed_checks": [
+        "summary"
+      ],
+      "why": "The summary adds a claim that is not in the source.",
+      "lesson": {
+        "title": "A good team stand-up",
+        "summary": "A good team stand-up is short and predictable. Most teams do it first thing in the morning.",
+        "quiz": {
+          "question": "Complete the statement: Hold it at the same time every day, and keep it to ____ minutes.",
+          "answer": "15"
+        },
+        "source_quote": "Hold it at the same time every day, and keep it to 15 minutes."
+      }
+    },
+    {
+      "id": "L06",
+      "source_id": "src-01",
+      "label": "revise",
+      "failure_type": "no_blank",
+      "expected_failed_checks": [
+        "contract"
+      ],
+      "why": "The quiz question has no blank (____), so it cannot be answered as a gap-fill.",
+      "lesson": {
+        "title": "A good team stand-up",
+        "summary": "A good team stand-up is short and predictable.",
+        "quiz": {
+          "question": "Complete the statement: Hold it at the same time every day, and keep it to 15 minutes.",
+          "answer": "15"
+        },
+        "source_quote": "Hold it at the same time every day, and keep it to 15 minutes."
+      }
+    },
+    {
+      "id": "L07",
+      "source_id": "src-02",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Correct: the quote is exact, the answer is in the quote, the summary uses only source words, and the question matches the quote.",
+      "lesson": {
+        "title": "Good password habits",
+        "summary": "Good password habits protect every account.",
+        "quiz": {
+          "question": "Complete the statement: Make each password at least ____ characters long.",
+          "answer": "14"
+        },
+        "source_quote": "Make each password at least 14 characters long."
+      }
+    },
+    {
+      "id": "L08",
+      "source_id": "src-02",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: extra spaces and lower case in the quote are allowed, because the quote still matches the source.",
+      "lesson": {
+        "title": "Good password habits",
+        "summary": "Good password habits protect every account.",
+        "quiz": {
+          "question": "Complete the statement: Make each password at least ____ characters long.",
+          "answer": "14"
+        },
+        "source_quote": "  make  each password at least 14 characters long. "
+      }
+    },
+    {
+      "id": "L09",
+      "source_id": "src-02",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: the summary is worded differently but uses only words from the source.",
+      "lesson": {
+        "title": "Good password habits",
+        "summary": "Use a different password for every account to protect each one.",
+        "quiz": {
+          "question": "Complete the statement: Make each password at least ____ characters long.",
+          "answer": "14"
+        },
+        "source_quote": "Make each password at least 14 characters long."
+      }
+    },
+    {
+      "id": "L10",
+      "source_id": "src-02",
+      "label": "revise",
+      "failure_type": "wrong_answer",
+      "expected_failed_checks": [
+        "answer"
+      ],
+      "why": "The quiz answer is not in the source quote.",
+      "lesson": {
+        "title": "Good password habits",
+        "summary": "Good password habits protect every account.",
+        "quiz": {
+          "question": "Complete the statement: Make each password at least ____ characters long.",
+          "answer": "12"
+        },
+        "source_quote": "Make each password at least 14 characters long."
+      }
+    },
+    {
+      "id": "L11",
+      "source_id": "src-02",
+      "label": "revise",
+      "failure_type": "unrelated_question",
+      "expected_failed_checks": [
+        "question"
+      ],
+      "why": "The quiz question asks about something the source quote does not say.",
+      "lesson": {
+        "title": "Good password habits",
+        "summary": "Good password habits protect every account.",
+        "quiz": {
+          "question": "Complete the statement: Passwords should be changed every ____ months.",
+          "answer": "14"
+        },
+        "source_quote": "Make each password at least 14 characters long."
+      }
+    },
+    {
+      "id": "L12",
+      "source_id": "src-02",
+      "label": "revise",
+      "failure_type": "invented_quote",
+      "expected_failed_checks": [
+        "quote",
+        "question"
+      ],
+      "why": "The source quote is a plausible sentence that does not appear in the source.",
+      "lesson": {
+        "title": "Good password habits",
+        "summary": "Good password habits protect every account.",
+        "quiz": {
+          "question": "Complete the statement: Make each password at least ____ characters long.",
+          "answer": "14"
+        },
+        "source_quote": "Every password must be at least 14 characters and include a symbol."
+      }
+    },
+    {
+      "id": "L13",
+      "source_id": "src-03",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Correct: the quote is exact, the answer is in the quote, the summary uses only source words, and the question matches the quote.",
+      "lesson": {
+        "title": "A clear meeting agenda",
+        "summary": "A clear agenda keeps a meeting focused.",
+        "quiz": {
+          "question": "Complete the statement: Send the agenda at least ____ hours before the meeting.",
+          "answer": "24"
+        },
+        "source_quote": "Send the agenda at least 24 hours before the meeting."
+      }
+    },
+    {
+      "id": "L14",
+      "source_id": "src-03",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: extra spaces and lower case in the quote are allowed, because the quote still matches the source.",
+      "lesson": {
+        "title": "A clear meeting agenda",
+        "summary": "A clear agenda keeps a meeting focused.",
+        "quiz": {
+          "question": "Complete the statement: Send the agenda at least ____ hours before the meeting.",
+          "answer": "24"
+        },
+        "source_quote": "  send  the agenda at least 24 hours before the meeting. "
+      }
+    },
+    {
+      "id": "L15",
+      "source_id": "src-03",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: the summary is worded differently but uses only words from the source.",
+      "lesson": {
+        "title": "A clear meeting agenda",
+        "summary": "A clear agenda keeps a meeting focused, and it is sent before the meeting.",
+        "quiz": {
+          "question": "Complete the statement: Send the agenda at least ____ hours before the meeting.",
+          "answer": "24"
+        },
+        "source_quote": "Send the agenda at least 24 hours before the meeting."
+      }
+    },
+    {
+      "id": "L16",
+      "source_id": "src-03",
+      "label": "revise",
+      "failure_type": "missing_field",
+      "expected_failed_checks": [
+        "contract"
+      ],
+      "why": "A required field is missing from the lesson.",
+      "lesson": {
+        "summary": "A clear agenda keeps a meeting focused.",
+        "quiz": {
+          "question": "Complete the statement: Send the agenda at least ____ hours before the meeting.",
+          "answer": "24"
+        },
+        "source_quote": "Send the agenda at least 24 hours before the meeting."
+      }
+    },
+    {
+      "id": "L17",
+      "source_id": "src-03",
+      "label": "revise",
+      "failure_type": "quote_paraphrased",
+      "expected_failed_checks": [
+        "quote",
+        "answer",
+        "question"
+      ],
+      "why": "The source quote is reworded instead of copied from the source.",
+      "lesson": {
+        "title": "A clear meeting agenda",
+        "summary": "A clear agenda keeps a meeting focused.",
+        "quiz": {
+          "question": "Complete the statement: Send the agenda at least ____ hours before the meeting.",
+          "answer": "24"
+        },
+        "source_quote": "Agendas must reach attendees a day ahead of the meeting."
+      }
+    },
+    {
+      "id": "L18",
+      "source_id": "src-03",
+      "label": "revise",
+      "failure_type": "invented_summary",
+      "expected_failed_checks": [
+        "summary"
+      ],
+      "why": "The summary adds a claim that is not in the source.",
+      "lesson": {
+        "title": "A clear meeting agenda",
+        "summary": "A clear agenda keeps a meeting focused. Meetings run best before lunch.",
+        "quiz": {
+          "question": "Complete the statement: Send the agenda at least ____ hours before the meeting.",
+          "answer": "24"
+        },
+        "source_quote": "Send the agenda at least 24 hours before the meeting."
+      }
+    },
+    {
+      "id": "L19",
+      "source_id": "src-04",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Correct: the quote is exact, the answer is in the quote, the summary uses only source words, and the question matches the quote.",
+      "lesson": {
+        "title": "Clear emails",
+        "summary": "Clear emails are quick to answer.",
+        "quiz": {
+          "question": "Complete the statement: Reply to urgent messages within ____ working hours.",
+          "answer": "4"
+        },
+        "source_quote": "Reply to urgent messages within 4 working hours."
+      }
+    },
+    {
+      "id": "L20",
+      "source_id": "src-04",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: extra spaces and lower case in the quote are allowed, because the quote still matches the source.",
+      "lesson": {
+        "title": "Clear emails",
+        "summary": "Clear emails are quick to answer.",
+        "quiz": {
+          "question": "Complete the statement: Reply to urgent messages within ____ working hours.",
+          "answer": "4"
+        },
+        "source_quote": "  reply  to urgent messages within 4 working hours. "
+      }
+    },
+    {
+      "id": "L21",
+      "source_id": "src-04",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: the summary is worded differently but uses only words from the source.",
+      "lesson": {
+        "title": "Clear emails",
+        "summary": "Clear emails have a subject line and a request near the top.",
+        "quiz": {
+          "question": "Complete the statement: Reply to urgent messages within ____ working hours.",
+          "answer": "4"
+        },
+        "source_quote": "Reply to urgent messages within 4 working hours."
+      }
+    },
+    {
+      "id": "L22",
+      "source_id": "src-04",
+      "label": "revise",
+      "failure_type": "no_blank",
+      "expected_failed_checks": [
+        "contract"
+      ],
+      "why": "The quiz question has no blank (____), so it cannot be answered as a gap-fill.",
+      "lesson": {
+        "title": "Clear emails",
+        "summary": "Clear emails are quick to answer.",
+        "quiz": {
+          "question": "Complete the statement: Reply to urgent messages within 4 working hours.",
+          "answer": "4"
+        },
+        "source_quote": "Reply to urgent messages within 4 working hours."
+      }
+    },
+    {
+      "id": "L23",
+      "source_id": "src-04",
+      "label": "revise",
+      "failure_type": "wrong_answer",
+      "expected_failed_checks": [
+        "answer"
+      ],
+      "why": "The quiz answer is not in the source quote.",
+      "lesson": {
+        "title": "Clear emails",
+        "summary": "Clear emails are quick to answer.",
+        "quiz": {
+          "question": "Complete the statement: Reply to urgent messages within ____ working hours.",
+          "answer": "24"
+        },
+        "source_quote": "Reply to urgent messages within 4 working hours."
+      }
+    },
+    {
+      "id": "L24",
+      "source_id": "src-04",
+      "label": "revise",
+      "failure_type": "unrelated_question",
+      "expected_failed_checks": [
+        "question"
+      ],
+      "why": "The quiz question asks about something the source quote does not say.",
+      "lesson": {
+        "title": "Clear emails",
+        "summary": "Clear emails are quick to answer.",
+        "quiz": {
+          "question": "Complete the statement: Emails should be sent in the ____.",
+          "answer": "4"
+        },
+        "source_quote": "Reply to urgent messages within 4 working hours."
+      }
+    },
+    {
+      "id": "L25",
+      "source_id": "src-05",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Correct: the quote is exact, the answer is in the quote, the summary uses only source words, and the question matches the quote.",
+      "lesson": {
+        "title": "Pour-over coffee",
+        "summary": "Pour-over coffee rewards patience.",
+        "quiz": {
+          "question": "Complete the statement: Wet the grounds first and wait ____ seconds.",
+          "answer": "30"
+        },
+        "source_quote": "Wet the grounds first and wait 30 seconds."
+      }
+    },
+    {
+      "id": "L26",
+      "source_id": "src-05",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: extra spaces and lower case in the quote are allowed, because the quote still matches the source.",
+      "lesson": {
+        "title": "Pour-over coffee",
+        "summary": "Pour-over coffee rewards patience.",
+        "quiz": {
+          "question": "Complete the statement: Wet the grounds first and wait ____ seconds.",
+          "answer": "30"
+        },
+        "source_quote": "  wet  the grounds first and wait 30 seconds. "
+      }
+    },
+    {
+      "id": "L27",
+      "source_id": "src-05",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: the summary is worded differently but uses only words from the source.",
+      "lesson": {
+        "title": "Pour-over coffee",
+        "summary": "Pour-over coffee rewards patience, so wet the grounds first.",
+        "quiz": {
+          "question": "Complete the statement: Wet the grounds first and wait ____ seconds.",
+          "answer": "30"
+        },
+        "source_quote": "Wet the grounds first and wait 30 seconds."
+      }
+    },
+    {
+      "id": "L28",
+      "source_id": "src-05",
+      "label": "revise",
+      "failure_type": "invented_quote",
+      "expected_failed_checks": [
+        "quote",
+        "question"
+      ],
+      "why": "The source quote is a plausible sentence that does not appear in the source.",
+      "lesson": {
+        "title": "Pour-over coffee",
+        "summary": "Pour-over coffee rewards patience.",
+        "quiz": {
+          "question": "Complete the statement: Wet the grounds first and wait ____ seconds.",
+          "answer": "30"
+        },
+        "source_quote": "Wait about 30 seconds for the coffee to bloom."
+      }
+    },
+    {
+      "id": "L29",
+      "source_id": "src-05",
+      "label": "revise",
+      "failure_type": "missing_field",
+      "expected_failed_checks": [
+        "contract"
+      ],
+      "why": "A required field is missing from the lesson.",
+      "lesson": {
+        "title": "Pour-over coffee",
+        "quiz": {
+          "question": "Complete the statement: Wet the grounds first and wait ____ seconds.",
+          "answer": "30"
+        },
+        "source_quote": "Wet the grounds first and wait 30 seconds."
+      }
+    },
+    {
+      "id": "L30",
+      "source_id": "src-05",
+      "label": "revise",
+      "failure_type": "quote_paraphrased",
+      "expected_failed_checks": [
+        "quote",
+        "answer",
+        "question"
+      ],
+      "why": "The source quote is reworded instead of copied from the source.",
+      "lesson": {
+        "title": "Pour-over coffee",
+        "summary": "Pour-over coffee rewards patience.",
+        "quiz": {
+          "question": "Complete the statement: Wet the grounds first and wait ____ seconds.",
+          "answer": "30"
+        },
+        "source_quote": "Let the grounds sit for half a minute after wetting them."
+      }
+    },
+    {
+      "id": "L31",
+      "source_id": "src-06",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Correct: the quote is exact, the answer is in the quote, the summary uses only source words, and the question matches the quote.",
+      "lesson": {
+        "title": "Good code reviews",
+        "summary": "Good code reviews are quick and kind.",
+        "quiz": {
+          "question": "Complete the statement: Aim to finish a review within ____ working days.",
+          "answer": "two"
+        },
+        "source_quote": "Aim to finish a review within two working days."
+      }
+    },
+    {
+      "id": "L32",
+      "source_id": "src-06",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: extra spaces and lower case in the quote are allowed, because the quote still matches the source.",
+      "lesson": {
+        "title": "Good code reviews",
+        "summary": "Good code reviews are quick and kind.",
+        "quiz": {
+          "question": "Complete the statement: Aim to finish a review within ____ working days.",
+          "answer": "two"
+        },
+        "source_quote": "  aim  to finish a review within two working days. "
+      }
+    },
+    {
+      "id": "L33",
+      "source_id": "src-06",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: the summary is worded differently but uses only words from the source.",
+      "lesson": {
+        "title": "Good code reviews",
+        "summary": "Good code reviews are quick and kind, and they comment on the code, not the person.",
+        "quiz": {
+          "question": "Complete the statement: Aim to finish a review within ____ working days.",
+          "answer": "two"
+        },
+        "source_quote": "Aim to finish a review within two working days."
+      }
+    },
+    {
+      "id": "L34",
+      "source_id": "src-06",
+      "label": "revise",
+      "failure_type": "invented_summary",
+      "expected_failed_checks": [
+        "summary"
+      ],
+      "why": "The summary adds a claim that is not in the source.",
+      "lesson": {
+        "title": "Good code reviews",
+        "summary": "Good code reviews are quick and kind. Reviewers should always approve the first draft.",
+        "quiz": {
+          "question": "Complete the statement: Aim to finish a review within ____ working days.",
+          "answer": "two"
+        },
+        "source_quote": "Aim to finish a review within two working days."
+      }
+    },
+    {
+      "id": "L35",
+      "source_id": "src-06",
+      "label": "revise",
+      "failure_type": "no_blank",
+      "expected_failed_checks": [
+        "contract"
+      ],
+      "why": "The quiz question has no blank (____), so it cannot be answered as a gap-fill.",
+      "lesson": {
+        "title": "Good code reviews",
+        "summary": "Good code reviews are quick and kind.",
+        "quiz": {
+          "question": "Complete the statement: Aim to finish a review within two working days.",
+          "answer": "two"
+        },
+        "source_quote": "Aim to finish a review within two working days."
+      }
+    },
+    {
+      "id": "L36",
+      "source_id": "src-06",
+      "label": "revise",
+      "failure_type": "wrong_answer",
+      "expected_failed_checks": [
+        "answer"
+      ],
+      "why": "The quiz answer is not in the source quote.",
+      "lesson": {
+        "title": "Good code reviews",
+        "summary": "Good code reviews are quick and kind.",
+        "quiz": {
+          "question": "Complete the statement: Aim to finish a review within ____ working days.",
+          "answer": "three"
+        },
+        "source_quote": "Aim to finish a review within two working days."
+      }
+    },
+    {
+      "id": "L37",
+      "source_id": "src-07",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Correct: the quote is exact, the answer is in the quote, the summary uses only source words, and the question matches the quote.",
+      "lesson": {
+        "title": "Welcoming new starters",
+        "summary": "A good welcome helps new starters settle in fast.",
+        "quiz": {
+          "question": "Complete the statement: Book the laptop and access requests at least ____ days ahead.",
+          "answer": "5"
+        },
+        "source_quote": "Book the laptop and access requests at least 5 days ahead."
+      }
+    },
+    {
+      "id": "L38",
+      "source_id": "src-07",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: extra spaces and lower case in the quote are allowed, because the quote still matches the source.",
+      "lesson": {
+        "title": "Welcoming new starters",
+        "summary": "A good welcome helps new starters settle in fast.",
+        "quiz": {
+          "question": "Complete the statement: Book the laptop and access requests at least ____ days ahead.",
+          "answer": "5"
+        },
+        "source_quote": "  book  the laptop and access requests at least 5 days ahead. "
+      }
+    },
+    {
+      "id": "L39",
+      "source_id": "src-07",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: the summary is worded differently but uses only words from the source.",
+      "lesson": {
+        "title": "Welcoming new starters",
+        "summary": "New starters settle in fast with a good welcome and a buddy.",
+        "quiz": {
+          "question": "Complete the statement: Book the laptop and access requests at least ____ days ahead.",
+          "answer": "5"
+        },
+        "source_quote": "Book the laptop and access requests at least 5 days ahead."
+      }
+    },
+    {
+      "id": "L40",
+      "source_id": "src-07",
+      "label": "revise",
+      "failure_type": "unrelated_question",
+      "expected_failed_checks": [
+        "question"
+      ],
+      "why": "The quiz question asks about something the source quote does not say.",
+      "lesson": {
+        "title": "Welcoming new starters",
+        "summary": "A good welcome helps new starters settle in fast.",
+        "quiz": {
+          "question": "Complete the statement: A buddy should be assigned for the first ____.",
+          "answer": "5"
+        },
+        "source_quote": "Book the laptop and access requests at least 5 days ahead."
+      }
+    },
+    {
+      "id": "L41",
+      "source_id": "src-07",
+      "label": "revise",
+      "failure_type": "invented_quote",
+      "expected_failed_checks": [
+        "quote",
+        "question"
+      ],
+      "why": "The source quote is a plausible sentence that does not appear in the source.",
+      "lesson": {
+        "title": "Welcoming new starters",
+        "summary": "A good welcome helps new starters settle in fast.",
+        "quiz": {
+          "question": "Complete the statement: Book the laptop and access requests at least ____ days ahead.",
+          "answer": "5"
+        },
+        "source_quote": "Order the laptop at least 5 days before the new starter arrives."
+      }
+    },
+    {
+      "id": "L42",
+      "source_id": "src-07",
+      "label": "revise",
+      "failure_type": "missing_field",
+      "expected_failed_checks": [
+        "contract",
+        "answer",
+        "question"
+      ],
+      "why": "A required field is missing from the lesson.",
+      "lesson": {
+        "title": "Welcoming new starters",
+        "summary": "A good welcome helps new starters settle in fast.",
+        "source_quote": "Book the laptop and access requests at least 5 days ahead."
+      }
+    },
+    {
+      "id": "L43",
+      "source_id": "src-08",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Correct: the quote is exact, the answer is in the quote, the summary uses only source words, and the question matches the quote.",
+      "lesson": {
+        "title": "A good bug report",
+        "summary": "A good bug report saves everyone time.",
+        "quiz": {
+          "question": "Complete the statement: Mark the report as urgent only if users are blocked for more than ____ minutes.",
+          "answer": "30"
+        },
+        "source_quote": "Mark the report as urgent only if users are blocked for more than 30 minutes."
+      }
+    },
+    {
+      "id": "L44",
+      "source_id": "src-08",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: extra spaces and lower case in the quote are allowed, because the quote still matches the source.",
+      "lesson": {
+        "title": "A good bug report",
+        "summary": "A good bug report saves everyone time.",
+        "quiz": {
+          "question": "Complete the statement: Mark the report as urgent only if users are blocked for more than ____ minutes.",
+          "answer": "30"
+        },
+        "source_quote": "  mark  the report as urgent only if users are blocked for more than 30 minutes. "
+      }
+    },
+    {
+      "id": "L45",
+      "source_id": "src-08",
+      "label": "approve",
+      "failure_type": "none",
+      "expected_failed_checks": [],
+      "why": "Also correct: the summary is worded differently but uses only words from the source.",
+      "lesson": {
+        "title": "A good bug report",
+        "summary": "A good bug report saves everyone time and lists the steps to reproduce the problem.",
+        "quiz": {
+          "question": "Complete the statement: Mark the report as urgent only if users are blocked for more than ____ minutes.",
+          "answer": "30"
+        },
+        "source_quote": "Mark the report as urgent only if users are blocked for more than 30 minutes."
+      }
+    },
+    {
+      "id": "L46",
+      "source_id": "src-08",
+      "label": "revise",
+      "failure_type": "quote_paraphrased",
+      "expected_failed_checks": [
+        "quote",
+        "answer",
+        "question"
+      ],
+      "why": "The source quote is reworded instead of copied from the source.",
+      "lesson": {
+        "title": "A good bug report",
+        "summary": "A good bug report saves everyone time.",
+        "quiz": {
+          "question": "Complete the statement: Mark the report as urgent only if users are blocked for more than ____ minutes.",
+          "answer": "30"
+        },
+        "source_quote": "Flag a report as urgent only when users are stuck for over half an hour."
+      }
+    },
+    {
+      "id": "L47",
+      "source_id": "src-08",
+      "label": "revise",
+      "failure_type": "wrong_answer",
+      "expected_failed_checks": [
+        "answer"
+      ],
+      "why": "The quiz answer is not in the source quote.",
+      "lesson": {
+        "title": "A good bug report",
+        "summary": "A good bug report saves everyone time.",
+        "quiz": {
+          "question": "Complete the statement: Mark the report as urgent only if users are blocked for more than ____ minutes.",
+          "answer": "60"
+        },
+        "source_quote": "Mark the report as urgent only if users are blocked for more than 30 minutes."
+      }
+    },
+    {
+      "id": "L48",
+      "source_id": "src-08",
+      "label": "revise",
+      "failure_type": "invented_summary",
+      "expected_failed_checks": [
+        "summary"
+      ],
+      "why": "The summary adds a claim that is not in the source.",
+      "lesson": {
+        "title": "A good bug report",
+        "summary": "A good bug report saves everyone time. Reports with screenshots are fixed twice as fast.",
+        "quiz": {
+          "question": "Complete the statement: Mark the report as urgent only if users are blocked for more than ____ minutes.",
+          "answer": "30"
+        },
+        "source_quote": "Mark the report as urgent only if users are blocked for more than 30 minutes."
+      }
+    }
+  ]
+}
