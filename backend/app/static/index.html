@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent loop and trace</title>
+<style>
+:root {
+  color-scheme: light;
+  --ink: #17211c;
+  --muted: #4d5c54;
+  --paper: #ffffff;
+  --canvas: #f2f5f3;
+  --line: #c9d3cd;
+  --accent: #1f7a3e;
+  --on-accent: #ffffff;
+  --accent-soft: #e1f0e6;
+  --bad: #a8231b;
+  --bad-soft: #fbe5e2;
+  --warn-soft: #fff1d4;
+  --warn-ink: #5e3f00;
+  --focus: #0b57d0;
+  --code-bg: #f6f8f7;
+  --sans: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--canvas); color: var(--ink); font: 15px/1.5 var(--sans); }
+h1 { font-size: 24px; line-height: 1.2; margin: 0 0 4px; }
+h2 { font-size: 17px; margin: 28px 0 8px; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.skip { position: absolute; left: 8px; top: -60px; background: var(--paper); padding: 8px 12px; border: 2px solid var(--focus); border-radius: 6px; z-index: 5; }
+.skip:focus { top: 8px; }
+.bar { display: flex; align-items: baseline; gap: 12px; padding: 12px 24px; background: var(--paper); border-bottom: 1px solid var(--line); }
+.bar span { color: var(--muted); font-size: 13px; }
+main { max-width: 980px; margin: 0 auto; padding: 24px 24px 64px; }
+.lead { color: var(--muted); max-width: 70ch; }
+.panel { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
+.notice { background: var(--warn-soft); color: var(--warn-ink); border-radius: 8px; padding: 10px 14px; margin: 0 0 16px; }
+label { display: block; font-weight: 600; margin: 0 0 4px; }
+textarea, select { width: 100%; border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; background: var(--paper); }
+textarea { resize: vertical; min-height: 140px; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 8px 0 16px; flex-wrap: wrap; }
+.count { color: var(--muted); font-size: 13px; }
+fieldset { border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px 8px; margin: 0 0 16px; }
+legend { font-weight: 650; padding: 0 6px; }
+.chk { display: flex; gap: 8px; align-items: flex-start; font-weight: 600; }
+.chk input { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--accent); }
+.hint { color: var(--muted); font-size: 13px; margin: 2px 0 12px 26px; }
+.field select { max-width: 160px; }
+.actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.primary, .secondary, .ghost { border-radius: 6px; padding: 9px 16px; cursor: pointer; font-weight: 650; }
+.primary { background: var(--accent); color: var(--on-accent); border: 0; }
+.secondary, a.secondary { background: var(--paper); border: 1.5px solid var(--accent); color: var(--ink); }
+a.secondary { display: inline-block; text-decoration: none; }
+.ghost { background: transparent; border: 1px solid var(--line); font-weight: 600; }
+.primary:disabled, .secondary:disabled { opacity: 0.45; cursor: not-allowed; }
+.msg.bad { color: var(--bad); }
+.pill { display: inline-block; border-radius: 999px; padding: 2px 10px; font-size: 13px; font-weight: 650; }
+.pill.ok { background: var(--accent-soft); border: 1px solid var(--accent); }
+.pill.bad { background: var(--bad-soft); color: var(--bad); border: 1px solid var(--bad); }
+.lanes { display: grid; grid-template-columns: 1fr 36px 1fr; gap: 12px 8px; align-items: stretch; }
+.lanehead { font-weight: 650; color: var(--muted); font-size: 14px; }
+.agent { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; background: var(--paper); }
+.agent.drafter { border-left: 6px solid var(--accent); }
+.agent.reviewer.revise { border-left: 6px solid var(--bad); }
+.agent.reviewer.approve { border-left: 6px solid var(--accent); }
+.agent dl { margin: 0; display: grid; grid-template-columns: 76px 1fr; gap: 4px 10px; font-size: 14px; }
+.agent dt { color: var(--muted); }
+.agent dd { margin: 0; overflow-wrap: anywhere; }
+.arrow { display: grid; place-items: center; color: var(--muted); font-size: 20px; }
+.issues { margin: 8px 0 0; padding-left: 18px; }
+.trace { list-style: none; margin: 0; padding: 0; font: 13px/1.6 var(--mono); background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px; }
+.trace li { display: grid; grid-template-columns: 72px 120px 1fr; gap: 8px; padding: 4px 12px; border-bottom: 1px solid var(--line); }
+.trace li:last-child { border-bottom: 0; }
+.trace .t, .trace .a { color: var(--muted); }
+pre { margin: 8px 0 0; padding: 12px; background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px; font: 12.5px/1.5 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+table { width: 100%; border-collapse: collapse; background: var(--paper); }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.hidden { display: none; }
+@media (max-width: 800px) {
+  .lanes { grid-template-columns: 1fr; }
+  .arrow { transform: rotate(90deg); }
+  .trace li { grid-template-columns: 64px 96px 1fr; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="bar">
+  <strong>Agent loop and trace</strong>
+</header>
+<main id="main">
+  <h1>Run the Drafter and the Reviewer</h1>
+  <p class="lead">Paste a short public text. The loop drafts a micro-lesson, checks it, and sends the Reviewer’s issues back until the lesson is approved or the retry limit is reached. Every step is written into the trace.</p>
+
+  <div class="panel">
+    <div class="notice" role="note">Use public text only. It is sent only to this agent loop on your computer.</div>
+    <label for="src">Source text</label>
+    <textarea id="src" rows="8" aria-describedby="count run-msg" spellcheck="false"></textarea>
+    <div class="row">
+      <span class="count" id="count">0 of 3,000 characters</span>
+      <button class="ghost" type="button" id="sample">Load sample text</button>
+    </div>
+    <fieldset>
+      <legend>Agent settings</legend>
+      <label class="chk" for="flaw"><input type="checkbox" id="flaw" checked> Make the first draft flawed on purpose</label>
+      <p class="hint">Lets you watch the Reviewer catch mistakes and the loop try again. Turn it off for a clean first draft. It starts on for the sample text.</p>
+      <div class="field">
+        <label for="retries">Maximum retries</label>
+        <select id="retries">
+          <option value="0">0</option>
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+        </select>
+      </div>
+    </fieldset>
+    <div class="actions">
+      <button class="primary" type="button" id="run">Run the agents</button>
+      <button class="secondary" type="button" id="eval">Run the 8 eval sources</button>
+      <span class="msg" id="run-msg" role="status"></span>
+    </div>
+  </div>
+
+  <section id="result" class="hidden" aria-live="polite"></section>
+  <section id="eval-result" class="hidden"></section>
+</main>
+<div class="sr" id="live" role="status" aria-live="polite"></div>
+<script>
+(function () {
+  "use strict";
+  var MIN = 50, MAX = 3000;
+  var sampleText = "";
+  var src = document.getElementById("src");
+  var count = document.getElementById("count");
+  var runMsg = document.getElementById("run-msg");
+  var runBtn = document.getElementById("run");
+  var live = document.getElementById("live");
+  var lastTrace = "";
+
+  function say(message) {
+    live.textContent = "";
+    setTimeout(function () { live.textContent = message; }, 30);
+  }
+  function esc(value) {
+    return String(value == null ? "" : value).replace(/[&<>"']/g, function (ch) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch];
+    });
+  }
+  function validity() {
+    var n = src.value.trim().length;
+    if (n < MIN) return { ok: false, msg: "Add at least " + MIN + " characters. You have " + n + "." };
+    if (n > MAX) return { ok: false, msg: "Shorten the text to " + MAX.toLocaleString("en-US") + " characters or fewer. You have " + n.toLocaleString("en-US") + "." };
+    return { ok: true, msg: "" };
+  }
+  function updateCount() {
+    var v = validity();
+    count.textContent = src.value.trim().length.toLocaleString("en-US") + " of " + MAX.toLocaleString("en-US") + " characters";
+    runBtn.disabled = !v.ok;
+    // Keep a success message. Only the length error uses the bad style.
+    if (!v.ok) {
+      runMsg.textContent = v.msg;
+      runMsg.className = "msg bad";
+    } else if (runMsg.classList.contains("bad")) {
+      runMsg.textContent = "";
+      runMsg.className = "msg";
+    }
+  }
+  function lessonJson(lesson) {
+    return JSON.stringify({
+      title: lesson.title,
+      summary: lesson.summary,
+      quiz: { question: lesson.quiz.question, answer: lesson.quiz.answer },
+      source_quote: lesson.source_quote
+    }, null, 2);
+  }
+  function draftCard(attempt) {
+    var d = attempt.draft;
+    return '<div class="agent drafter"><h3>Drafter, attempt ' + attempt.n + '</h3><dl>' +
+      '<dt>Title</dt><dd>' + esc(d.title) + '</dd>' +
+      '<dt>Summary</dt><dd>' + esc(d.summary) + '</dd>' +
+      '<dt>Question</dt><dd>' + esc(d.quiz.question) + '</dd>' +
+      '<dt>Answer</dt><dd>' + esc(d.quiz.answer) + '</dd>' +
+      '<dt>Quote</dt><dd>“' + esc(d.source_quote) + '”</dd></dl></div>';
+  }
+  function reviewCard(attempt) {
+    var review = attempt.review;
+    var issues = review.issues || [];
+    var body = issues.length
+      ? '<ul class="issues">' + issues.map(function (issue) { return '<li>' + esc(issue) + '</li>'; }).join('') + '</ul>'
+      : '<p>No issues found. All five checks passed.</p>';
+    return '<div class="agent reviewer ' + esc(review.verdict) + '"><h3>Reviewer, attempt ' + attempt.n +
+      ' <span class="pill ' + (review.verdict === 'approve' ? 'ok' : 'bad') + '">' +
+      (review.verdict === 'approve' ? 'Approve' : 'Revise') + '</span></h3>' + body + '</div>';
+  }
+  function renderRun(data) {
+    lastTrace = data.trace_text || "";
+    var status = data.status === 'approved'
+      ? '<span class="pill ok">Approved by the Reviewer</span>'
+      : '<span class="pill bad">Needs a person</span>';
+    var rows = (data.attempts || []).map(function (attempt) {
+      return draftCard(attempt) + '<div class="arrow" aria-hidden="true">→</div>' + reviewCard(attempt);
+    }).join('');
+    var trace = (data.trace || []).map(function (line) {
+      return '<li><span class="t">' + esc(line.t) + '</span><span class="a">' + esc(line.agent) + '</span><span>' + esc(line.text) + '</span></li>';
+    }).join('');
+    var file = data.trace_file ? '<p class="count">Trace file: ' + esc(data.trace_file.split('/').slice(-2).join('/')) + '</p>' : '';
+    document.getElementById("result").className = "";
+    document.getElementById("result").innerHTML =
+      '<h2>Agent run</h2><p class="lead">' + status + ' The Drafter writes, the Reviewer checks, and the Orchestrator sends issues back until the lesson is approved or the retry limit is reached.</p>' +
+      '<div class="lanes"><div class="lanehead">Drafter agent</div><div></div><div class="lanehead">Reviewer agent</div>' + rows + '</div>' +
+      '<h2>Trace</h2>' + file +
+      '<ol class="trace" aria-label="Trace of agent steps">' + trace + '</ol>' +
+      '<div class="actions" style="margin-top:16px"><button class="secondary" type="button" id="copy-trace">Copy trace</button>' +
+      '<a class="secondary" id="download-trace" href="/api/runs/' + encodeURIComponent(data.id) + '/trace" download="' + esc(data.id) + '.txt">Download trace</a></div>' +
+      '<h2>Lesson</h2><pre>' + esc(lessonJson(data.lesson)) + '</pre>';
+    document.getElementById("copy-trace").addEventListener("click", copyTrace);
+  }
+  function renderEval(data) {
+    var rows = (data.sources || []).map(function (row) {
+      return '<tr><td>' + esc(row.source_id) + '</td><td>' + esc(row.topic) + '</td><td>' + esc(row.outcome.replaceAll('_', ' ')) + '</td><td>' + esc(row.attempts) + '</td></tr>';
+    }).join('');
+    document.getElementById("eval-result").className = "";
+    document.getElementById("eval-result").innerHTML =
+      '<h2>Eval sources</h2>' +
+      '<p class="lead">Approved first time: ' + data.approved_first +
+      '. Approved after a retry: ' + data.approved_after_retry +
+      '. Still need a person: ' + data.needs_person + '.</p>' +
+      '<table><thead><tr><th>Source</th><th>Topic</th><th>Outcome</th><th>Attempts</th></tr></thead><tbody>' + rows + '</tbody></table>';
+  }
+  function copyTrace() {
+    function finish(ok) {
+      var message = ok ? "Trace copied." : "Copy is not available here. Select the trace and copy it.";
+      runMsg.textContent = message;
+      runMsg.className = "msg" + (ok ? "" : " bad");
+      say(message);
+    }
+    function fallback() {
+      var area = document.createElement("textarea");
+      area.value = lastTrace;
+      area.setAttribute("readonly", "");
+      area.style.position = "fixed";
+      area.style.opacity = "0";
+      document.body.appendChild(area);
+      area.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (error) { ok = false; }
+      document.body.removeChild(area);
+      finish(ok);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(lastTrace).then(function () { finish(true); }, fallback);
+    } else {
+      fallback();
+    }
+  }
+  async function post(url, body) {
+    var response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    var data = await response.json().catch(function () { return {}; });
+    if (!response.ok) {
+      var detail = data.detail;
+      throw new Error(typeof detail === "string" ? detail : "The agent loop could not finish.");
+    }
+    return data;
+  }
+  src.addEventListener("input", updateCount);
+  document.getElementById("sample").addEventListener("click", function () {
+    src.value = sampleText;
+    updateCount();
+    src.focus();
+    say("Sample text loaded.");
+  });
+  runBtn.addEventListener("click", async function () {
+    if (!validity().ok) return;
+    runBtn.disabled = true;
+    runMsg.textContent = "Running the agents.";
+    runMsg.className = "msg";
+    say("Running the agents.");
+    try {
+      var data = await post("/api/run", {
+        source: src.value,
+        flaw: document.getElementById("flaw").checked,
+        retries: Number(document.getElementById("retries").value)
+      });
+      renderRun(data);
+      var spoken = data.status === "approved"
+        ? "Agents finished. The Reviewer approved the lesson."
+        : "Agents finished. The lesson needs a person to decide.";
+      runMsg.textContent = spoken;
+      say(spoken);
+    } catch (error) {
+      runMsg.textContent = error.message;
+      runMsg.className = "msg bad";
+      say(error.message);
+    } finally {
+      updateCount();
+    }
+  });
+  document.getElementById("eval").addEventListener("click", async function () {
+    var button = document.getElementById("eval");
+    button.disabled = true;
+    runMsg.textContent = "Running the 8 eval sources.";
+    say("Running the 8 eval sources.");
+    try {
+      var data = await post("/api/eval", {
+        flaw: document.getElementById("flaw").checked,
+        retries: Number(document.getElementById("retries").value)
+      });
+      renderEval(data);
+      var spoken = data.approved_first + " approved first time, " + data.approved_after_retry + " after a retry, " + data.needs_person + " still need a person.";
+      runMsg.textContent = spoken;
+      say(spoken);
+    } catch (error) {
+      runMsg.textContent = error.message;
+      runMsg.className = "msg bad";
+      say(error.message);
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  fetch("/api/sample").then(function (response) { return response.json(); }).then(function (data) {
+    sampleText = data.text || "";
+    src.value = sampleText;
+    updateCount();
+  }).catch(function () { updateCount(); });
+})();
+</script>
+</body>
+</html>
